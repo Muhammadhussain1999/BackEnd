@@ -3,6 +3,7 @@
 
 const express = require("express");
 const app = express();
+const userModel = require("./users");
 app.use(function (req, req, next) {
   console.log("hello from middleware");
   next();
