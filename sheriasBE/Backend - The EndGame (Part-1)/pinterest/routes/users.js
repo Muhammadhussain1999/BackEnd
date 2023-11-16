@@ -9,6 +9,7 @@ const userSchema = mongoose.Schema({
   username: String,
   name: String,
   age: Number,
+  description: String,
 });
 
 //collection
