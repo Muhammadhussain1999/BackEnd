@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const userModel = require("./users");
+const classUsers = require("./userNewDB");
 /* GET home page. */
 // router.get("/", function (req, res, next) {
 //   res.send("hello");
@@ -45,17 +46,61 @@ const userModel = require("./users");
 //   });
 // });
 
-router.get("/", function (req, res) {
-  res.cookie("age", 25);
-  res.render("index");
-});
-router.get("/read", function (req, res) {
-  console.log(req.cookies);
-  res.send("check");
-});
+// router.get("/", function (req, res) {
+//   res.cookie("age", 25);
+//   res.render("index");
+// });
+// router.get("/read", function (req, res) {
+//   console.log(req.cookies);
+//   res.send("check");
+// });
 
-router.get("/delete", function (req, res) {
-  res.clearCookie("age");
-  res.send("clear hogi");
+// router.get("/delete", function (req, res) {
+//   res.clearCookie("age");
+//   res.send("clear hogi");
+// });
+router.get("/create", async function (req, res) {
+  const user = await userModel.create({
+    username: "SaadBaba",
+    name: "khan",
+    age: 2,
+    description: ["Js2", "js3"],
+  });
+  res.send(user);
 });
+router.post("/CreateClass", async function (req, res) {
+  const user = await classUsers.create(req.body);
+  res.send(user);
+});
+// router.get("/find", async function (req, res) {
+//   let regex = new RegExp("^saadbaba$", "i");
+//   let user = await classUsers.find({ category: { $all: ["fashion", "food"] } });
+//   res.send(user);
+// });
+// router.get("/find", async function (req, res) {
+//   let regex = new RegExp("^saadbaba$", "i");
+//   var date1 = new Date("2023-11-02");
+//   var date2 = new Date("2023-11-16");
+//   let user = await classUsers.find({
+//     dateCreated: { $gte: date1, $lte: date2 },
+//   });
+//   res.send(user);
+// });
+// router.get("/find", async function (req, res) {
+//   let regex = new RegExp("^saadbaba$", "i");
+//   let user = await classUsers.find({ category: { $exists: true } });
+//   res.send(user);
+// });
+// router.get("/find", async function (req, res) {
+//   let regex = new RegExp("^saadbaba$", "i");
+//   let user = await classUsers.find({
+//     $expr: {
+//       $and: [
+//         { $gte: [{ $strLenCP: "$username" }, 0] },
+//         { $lte: [{ $strLenCP: "$username" }, 5] },
+//       ],
+//     },
+//   });
+//   res.send(user);
+// });
 module.exports = router;

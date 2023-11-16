@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 // dataBase Creation
 mongoose.connect("mongodb://127.0.0.1:27017/MyFirstDataBase");
 
@@ -9,6 +8,10 @@ const userSchema = mongoose.Schema({
   username: String,
   name: String,
   age: Number,
+  category: {
+    type: Array,
+    default: [],
+  },
   description: {
     type: Array,
     default: [],
@@ -18,6 +21,5 @@ const userSchema = mongoose.Schema({
     default: Date.now(),
   },
 });
-
 //collection
-module.exports = mongoose.model("user", userSchema);
+module.exports = mongoose.model("class", userSchema);
