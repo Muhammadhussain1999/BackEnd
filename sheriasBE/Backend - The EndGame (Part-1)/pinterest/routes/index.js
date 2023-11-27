@@ -2,6 +2,9 @@ var express = require("express");
 var router = express.Router();
 const userModel = require("./users");
 const classUsers = require("./userNewDB");
+const passport = require("passport");
+const localStrategy = require("passport-local");
+
 /* GET home page. */
 // router.get("/", function (req, res, next) {
 //   res.send("hello");
@@ -59,19 +62,19 @@ const classUsers = require("./userNewDB");
 //   res.clearCookie("age");
 //   res.send("clear hogi");
 // });
-router.get("/create", async function (req, res) {
-  const user = await userModel.create({
-    username: "SaadBaba",
-    name: "khan",
-    age: 2,
-    description: ["Js2", "js3"],
-  });
-  res.send(user);
-});
-router.post("/CreateClass", async function (req, res) {
-  const user = await classUsers.create(req.body);
-  res.send(user);
-});
+// router.get("/create", async function (req, res) {
+//   const user = await userModel.create({
+//     username: "SaadBaba",
+//     name: "khan",
+//     age: 2,
+//     description: ["Js2", "js3"],
+//   });
+//   res.send(user);
+// });
+// router.post("/CreateClass", async function (req, res) {
+//   const user = await classUsers.create(req.body);
+//   res.send(user);
+// });
 // router.get("/find", async function (req, res) {
 //   let regex = new RegExp("^saadbaba$", "i");
 //   let user = await classUsers.find({ category: { $all: ["fashion", "food"] } });
@@ -103,4 +106,43 @@ router.post("/CreateClass", async function (req, res) {
 //   });
 //   res.send(user);
 // });
+router.get("/", function (req, res) {
+  res.render("index");
+});
+router.get("/profile", isLoggedIn, function (req, res) {
+  res.send("welcome to profile");
+});
+router.post("/register", function (req, res) {
+  var userData = new userModel({
+    username: String,
+    secret: String,
+  });
+  userModel.register(userdata, req.body.password).then(function (registration) {
+    passport.authenticate("local")(req, res, function () {
+      res.redirect("/profile");
+    });
+  });
+});
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/profile",
+    failureRedirect: "login",
+  }),
+  function (req, res) {}
+);
+router.get("/logout", function (req, res, next) {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+});
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/");
+}
 module.exports = router;
