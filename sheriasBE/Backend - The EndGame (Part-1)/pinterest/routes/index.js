@@ -4,6 +4,17 @@ const userModel = require("./users");
 const classUsers = require("./userNewDB");
 const passport = require("passport");
 const localStrategy = require("passport-local");
+// Define your user serialization and deserialization logic
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  // Fetch user from the database based on the id
+  User.findById(id, (err, user) => {
+    done(err, user);
+  });
+});
 
 /* GET home page. */
 // router.get("/", function (req, res, next) {
@@ -106,6 +117,7 @@ const localStrategy = require("passport-local");
 //   });
 //   res.send(user);
 // });
+passport.use(new localStrategy(userModel.authenticate()));
 router.get("/", function (req, res) {
   res.render("index");
 });
@@ -113,9 +125,9 @@ router.get("/profile", isLoggedIn, function (req, res) {
   res.send("welcome to profile");
 });
 router.post("/register", function (req, res) {
-  var userData = new userModel({
-    username: String,
-    secret: String,
+  var userdata = new userModel({
+    username: req.body.username,
+    secret: req.body.secret,
   });
   userModel.register(userdata, req.body.password).then(function (registration) {
     passport.authenticate("local")(req, res, function () {
