@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../stylessheets/style.css" />
+    <script src="../javascripts/javaS2.js"></script>
+  </head>
+  <body>
+    <article>
+      <nav>
+        <ul>
+          <a href="">Contacts</a>
+          <a href="">Information</a>
+          <a href="">Schedule</a>
+          <a href="" id="left">Home</a>
+        </ul>
+      </nav>
+      <h1 class="fade-in">Discover New Worlds</h1>
+      <div id="content" class="fade-in-2">
+        <ul type="none">
+          <li>
+            <button id="saad" onclick="sendRequest()"><%=username%></button>
+          </li>
+          <li><a href="">History</a></li>
+          <li><a href="/error">Legacy</a></li>
+          <li><a href="/new-route">fullService</a></li>
+        </ul>
+      </div>
+
+      <div class="footer">
+        <p>
+          Kyoto Industries ©
+          <span
+            ><script>
+              document.write(/\d{4}/.exec(Date())[0]);
+            </script>
+          </span>
+        </p>
+      </div>
+    </article>
+  </body>
+</html>

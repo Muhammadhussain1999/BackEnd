@@ -4,17 +4,6 @@ const userModel = require("./users");
 const classUsers = require("./userNewDB");
 const passport = require("passport");
 const localStrategy = require("passport-local");
-// Define your user serialization and deserialization logic
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser((id, done) => {
-  // Fetch user from the database based on the id
-  User.findById(id, (err, user) => {
-    done(err, user);
-  });
-});
 
 /* GET home page. */
 // router.get("/", function (req, res, next) {
@@ -119,10 +108,11 @@ passport.deserializeUser((id, done) => {
 // });
 passport.use(new localStrategy(userModel.authenticate()));
 router.get("/", function (req, res) {
-  res.render("index");
+  const messages = req.flash();
+  res.render("index", { messages });
 });
 router.get("/profile", isLoggedIn, function (req, res) {
-  res.send("welcome to profile");
+  res.render("profile");
 });
 router.post("/register", function (req, res) {
   var userdata = new userModel({
@@ -139,7 +129,8 @@ router.post(
   "/login",
   passport.authenticate("local", {
     successRedirect: "/profile",
-    failureRedirect: "login",
+    failureRedirect: "/",
+    failureFlash: true,
   }),
   function (req, res) {}
 );
