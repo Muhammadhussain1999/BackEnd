@@ -1,6 +1,6 @@
 npm i express-generator -g -install express-generator
 express appname --view=ejs
-
+expr
 cd appname
 npm isntall 
 
