@@ -17,20 +17,31 @@
                 <img src="https://images.unsplash.com/photo-1692970126004-862efac4da0c?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2OTUzNDI4NTZ8&ixlib=rb-4.0.3&q=85"
                     alt="Profile Picture">
             </div>
-            <h2 class="name">username</h2>
-            <h3 class="username">@username</h3>
+            <h2 class="name"><%=user.fullname%></h2>
+            <h3 class="username"><%= user.username %></h3>
             <p class="tagline">tag line</p>
             <p class="description">some Description.</p>
             <a href="#" class="button">Account Setting</a>
+            <a href="/logout" class="button">Logout</a>
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+                <input type="text" name="filecaption" placeholder="some caption">
+                <input type="file" name="file">
+                <input type="submit">
+            </form>
+
         </div>
     </div>
     <div class="container">
-        <div class="card" style="width: 18rem;">
-            <img src="https://images.unsplash.com/photo-1694768302592-7e9e32fcc65a?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2OTUzNDI4NTZ8&ixlib=rb-4.0.3&q=85"
-                class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">All Designs</h5>
-            </div>
+        <div class="cards flex">
+            <% user.posts.forEach(function(post){%>
+
+                <div class="card" style="width: 18rem;">
+                    <img src=" /images/uploads/<%= post.image %>">
+                    <div class="card-body">
+                        <h5 class="card-title"><%=post.imageText%></h5>
+                    </div>
+                </div>
+            <% })%>
         </div>
 
 

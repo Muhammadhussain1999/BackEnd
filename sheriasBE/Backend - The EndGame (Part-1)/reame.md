@@ -9,3 +9,12 @@ install these packages:
 Write app.js code in app.js file and write it after view engine and before logger
 setup user.js then properly
 in index.js try reister first and then other codes as well
+
+
+posts
+images
+caption
+
+multer
+image upload
+caption
